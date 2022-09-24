@@ -1,6 +1,7 @@
 package com.devwarex.currency.di
 
 import android.content.Context
+import com.devwarex.currency.R
 import com.devwarex.currency.datastore.DatastoreImpl
 import com.devwarex.currency.db.AppDao
 import com.devwarex.currency.db.AppRoomDatabase
@@ -22,6 +23,11 @@ class AppModule {
     @Provides
     @Singleton
     fun getInstanceDatastore(@ApplicationContext context: Context): DatastoreImpl = DatastoreImpl.create(context = context)
+
+    @Provides
+    @Singleton
+    @NamedApiKey
+    fun getCurrencyApiKey(@ApplicationContext context: Context): String = context.getString(R.string.api_key)
 
 
 }
