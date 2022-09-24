@@ -6,7 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object CurrencyClient {
 
-
     fun create(): CurrencyService = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
