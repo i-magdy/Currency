@@ -20,4 +20,5 @@ ext{
     //according to kotlin docs https://kotlinlang.org/docs/kapt.html Kapt in the maintenance mode.
     core_version = '1.7.0' //We have to make kotlin version Fixed,while they keep it up-to-date with recent Kotlin and Java releases
     livecycle_version = '2.5.1'
+    room_version = '2.4.3'
 }

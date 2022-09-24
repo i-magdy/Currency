@@ -32,6 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled true
+    }
+    dataBinding{
+        enabled true
+    }
 }
 
 dependencies {
@@ -43,9 +49,15 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$livecycle_version"
+    //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    //room
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
