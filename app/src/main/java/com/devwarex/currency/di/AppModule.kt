@@ -2,6 +2,8 @@ package com.devwarex.currency.di
 
 import android.content.Context
 import com.devwarex.currency.R
+import com.devwarex.currency.api.CurrencyClient
+import com.devwarex.currency.api.CurrencyService
 import com.devwarex.currency.datastore.DatastoreImpl
 import com.devwarex.currency.db.AppDao
 import com.devwarex.currency.db.AppRoomDatabase
@@ -16,6 +18,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
+
+    @Provides
+    @Singleton
+    fun getInstanceApisClientService(): CurrencyService = CurrencyClient.create()
+
     @Provides
     @Singleton
     fun getInstanceRoomDBDao(@ApplicationContext context: Context): AppDao = AppRoomDatabase.getAppDatabase(context = context).appDao()
@@ -28,6 +35,5 @@ class AppModule {
     @Singleton
     @NamedApiKey
     fun getCurrencyApiKey(@ApplicationContext context: Context): String = context.getString(R.string.api_key)
-
 
 }
