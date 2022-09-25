@@ -36,7 +36,7 @@ sealed class ApiResource<R> {
     }
 
     data class OnLoading<R>(val isLoading:Boolean): ApiResource<R>()
-    data class OnSuccess<R>(val isLoading:Boolean,val body: R): ApiResource<R>()
+    data class OnSuccess<R>(val isLoading:Boolean,val body: R?): ApiResource<R>()
     data class OnError<R>(val isLoading:Boolean,val error: String): ApiResource<R>()
 
 }
