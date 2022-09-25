@@ -7,4 +7,9 @@
     <string name="app_disconnected_message">Disconnected,Please Check your connection</string>
     <string name="fetching_data_message">Fetching data..</string>
     <string name="succeed_fetch_message">Succeed.</string>
+    <string name="conversion_label">Currency Conversion</string>
+    <string name="details_label">Details</string>
+    <string name="amount_title">Amount</string>
+    <string name="result_title">Result</string>
+    <string name="see_details_title">See more details</string>
 </resources>

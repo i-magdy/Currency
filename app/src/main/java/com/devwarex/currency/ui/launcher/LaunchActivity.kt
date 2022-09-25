@@ -1,19 +1,20 @@
 package com.devwarex.currency.ui.launcher
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.devwarex.currency.R
 import com.devwarex.currency.databinding.ActivityLaunchBinding
+import com.devwarex.currency.ui.home.MainActivity
 import com.devwarex.currency.util.NetworkUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LaunchActivity : AppCompatActivity() {
-    lateinit var binding:ActivityLaunchBinding
+    private lateinit var binding:ActivityLaunchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLaunchBinding.inflate(layoutInflater)
@@ -34,7 +35,7 @@ class LaunchActivity : AppCompatActivity() {
                     }
                 )
                 if (it.navigate){
-                    //TODO Navigate
+                    updateUi()
                 }
             } }
         }
@@ -42,7 +43,9 @@ class LaunchActivity : AppCompatActivity() {
 
 
     private fun updateUi(){
-
+        val homeIntent = Intent(this@LaunchActivity,MainActivity::class.java)
+        startActivity(homeIntent)
+        finish()
     }
 
 }

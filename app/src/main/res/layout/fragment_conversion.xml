@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.devwarex.currency.ui.home.converter.ConversionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/from_currency_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageButton">
+            <AutoCompleteTextView
+                android:id="@+id/from_currency_ac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+       
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_switch"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/to_currency_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="24dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:layout_constraintBottom_toBottomOf="@+id/from_currency_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="@+id/from_currency_layout">
+            <AutoCompleteTextView
+                android:id="@+id/to_currency_ac"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        
+        <EditText
+            android:id="@+id/amount_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:inputType="numberDecimal"
+            android:hint="@string/amount_title"
+            app:layout_constraintEnd_toEndOf="@+id/from_currency_layout"
+            app:layout_constraintStart_toStartOf="@+id/from_currency_layout"
+            app:layout_constraintTop_toBottomOf="@+id/from_currency_layout"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/result_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/result_title"
+            android:inputType="none"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@+id/amount_et"
+            app:layout_constraintEnd_toEndOf="@+id/to_currency_layout"
+            app:layout_constraintStart_toStartOf="@+id/to_currency_layout"
+            app:layout_constraintTop_toTopOf="@+id/amount_et"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/details_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_details_title"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amount_et" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
