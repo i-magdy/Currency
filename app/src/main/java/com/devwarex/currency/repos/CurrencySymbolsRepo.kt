@@ -1,6 +1,5 @@
 package com.devwarex.currency.repos
 
-import android.util.Log
 import com.devwarex.currency.api.ApiResource
 import com.devwarex.currency.api.CurrencyService
 import com.devwarex.currency.di.NamedApiKey

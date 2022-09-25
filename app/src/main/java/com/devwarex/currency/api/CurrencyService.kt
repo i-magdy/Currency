@@ -23,7 +23,7 @@ interface CurrencyService {
         @Header(EndPoints.API_KEY_HEADER) apiKey: String,
         @Query(EndPoints.FROM_QUERY) from: String,
         @Query(EndPoints.TO_QUERY) to: String,
-        @Query(EndPoints.AMOUNT_QUERY) amount: Double
+        @Query(EndPoints.AMOUNT_QUERY) amount: Int = 1
     ): Response<CurrencyConversionModel>
 
     @GET(EndPoints.TIME_SERIES_RES)
