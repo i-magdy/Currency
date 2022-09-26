@@ -28,6 +28,7 @@
                 android:id="@+id/from_currency_ac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{viewModel.uiState.from}"
                 android:inputType="none"
                 tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -39,10 +40,15 @@
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:src="@drawable/ic_switch"
+            android:focusable="true"
+            android:clickable="true"
+            android:enabled="@{viewModel.uiState.enable}"
+            android:onClick="@{()-> viewModel.onSwitch()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/switch_label" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,6 +67,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:inputType="none"
+                android:text="@{viewModel.uiState.to}"
                 tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -72,6 +79,8 @@
             android:layout_marginTop="24dp"
             android:inputType="numberDecimal"
             android:hint="@string/amount_title"
+            android:text="@{viewModel.uiState.amount}"
+            android:enabled="@{viewModel.uiState.enable}"
             app:layout_constraintEnd_toEndOf="@+id/from_currency_layout"
             app:layout_constraintStart_toStartOf="@+id/from_currency_layout"
             app:layout_constraintTop_toBottomOf="@+id/from_currency_layout"
@@ -82,8 +91,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/result_title"
-            android:inputType="none"
-            android:enabled="false"
+            android:inputType="numberDecimal"
+            android:enabled="@{viewModel.uiState.enable}"
+            android:text="@{viewModel.uiState.result}"
             app:layout_constraintBottom_toBottomOf="@+id/amount_et"
             app:layout_constraintEnd_toEndOf="@+id/to_currency_layout"
             app:layout_constraintStart_toStartOf="@+id/to_currency_layout"
@@ -96,9 +106,11 @@
             android:layout_height="wrap_content"
             android:text="@string/see_details_title"
             android:textAllCaps="false"
+            android:enabled="@{viewModel.uiState.enable}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()-> viewModel.navigateToDetails()}"
             app:layout_constraintTop_toBottomOf="@+id/amount_et" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

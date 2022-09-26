@@ -12,4 +12,5 @@
     <string name="amount_title">Amount</string>
     <string name="result_title">Result</string>
     <string name="see_details_title">See more details</string>
+    <string name="switch_label">Switch currency</string>
 </resources>
