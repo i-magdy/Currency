@@ -17,6 +17,7 @@ import com.devwarex.currency.R
 import com.devwarex.currency.databinding.FragmentConversionBinding
 import com.devwarex.currency.util.ErrorState
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -52,6 +53,7 @@ class ConversionFragment : Fragment(
                         rateKey = it.rate_key,
                         amount =it.amount
                     )
+                    findNavController().navigateUp()
                     findNavController().navigate(action)
                 }
             } }

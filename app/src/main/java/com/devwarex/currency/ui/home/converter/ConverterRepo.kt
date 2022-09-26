@@ -21,7 +21,7 @@ class ConverterRepo @Inject constructor(
 ) {
 
     private val _rate = MutableStateFlow<CurrencyRate>(CurrencyRate("","","",0.0,0L))
-     val errorState = MutableStateFlow(ErrorState.NONE)
+    val errorState = MutableStateFlow(ErrorState.NONE)
     val rate: StateFlow<CurrencyRate> = _rate
     val currencies get() = db.currencies
     private val coroutineJob = CoroutineScope(Dispatchers.IO)

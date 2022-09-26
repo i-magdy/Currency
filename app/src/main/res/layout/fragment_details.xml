@@ -10,14 +10,14 @@
         android:orientation="horizontal">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/time_series_rv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:listitem="@layout/rate_list_item"
             android:layout_margin="8dp"
             android:layout_weight="1"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popular_rate_rv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:listitem="@layout/rate_list_item"
             android:layout_margin="8dp"

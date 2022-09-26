@@ -72,7 +72,7 @@ class ConversionViewModel @Inject constructor(
         if (from == to) return
         viewModelScope.launch {
             _uiState.emit(_uiState.value.copy(
-                enable = false,
+                enable = from.isNotEmpty() && to.isNotEmpty(),
                 from = from,
                 to = to)
             )

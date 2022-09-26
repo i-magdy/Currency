@@ -7,6 +7,7 @@ import com.devwarex.currency.models.RatesModel
 import com.devwarex.currency.repos.CurrencyRatePopular
 import com.devwarex.currency.repos.CurrencyRateTimeSeries
 import com.devwarex.currency.util.ApiDateTimeModel
+import com.devwarex.currency.util.ErrorState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -24,10 +25,10 @@ class DetailsRepo @Inject constructor(
 
     private val coroutineJob = CoroutineScope(Dispatchers.IO)
     private var toKey: String = ""
-    private val _popularRates = MutableStateFlow<List<RatesModel>>(emptyList())
-    private val _timeRates = MutableStateFlow<List<RatesModel>>(emptyList())
-    val popularRates: StateFlow<List<RatesModel>> = _popularRates
-    val timeRates: StateFlow<List<RatesModel>> = _timeRates
+    val errorState = MutableStateFlow(ErrorState.NONE)
+    val popularRates = MutableStateFlow<List<RatesModel>>(emptyList())
+    val timeRates = MutableStateFlow<List<RatesModel>>(emptyList())
+    private var errorCounts = 0
 
     init {
         coroutineJob.launch {
@@ -43,15 +44,22 @@ class DetailsRepo @Inject constructor(
                                         list.add(
                                             RatesModel(
                                                 title = "$base/${value.key}",
-                                                value = String.format("$.2f", value.value)
+                                                value = String.format("%.2f", value.value)
                                             )
                                         )
                                     }
-                                    _popularRates.emit(list)
+                                    popularRates.emit(list)
                                 }
                             }
                         }
-                        is ApiResource.OnError -> {}
+                        is ApiResource.OnError -> {
+                            if (errorCounts < 2){
+                                errorState.emit(ErrorState.TRY_AGAIN)
+                            }else{
+                                errorState.emit(ErrorState.TRY_LATER)
+                            }
+                            errorCounts++
+                        }
                         is ApiResource.OnLoading -> {}
                     }
                 }
@@ -67,21 +75,28 @@ class DetailsRepo @Inject constructor(
                                 for (value in api.body.rates) {
                                     list.add(
                                         RatesModel(
-                                            title = "$base/${value.key}",
+                                            title = value.key,
                                             value = "$base/$toKey: ${
                                                 String.format(
-                                                    "$.2f",
+                                                    "%.2f",
                                                     value.value[toKey]
                                                 )
                                             }"
                                         )
                                     )
                                 }
-                                _popularRates.emit(list)
+                                timeRates.emit(list.sortedByDescending { r ->  r.title })
                             }
                         }
                     }
-                    is ApiResource.OnError -> {}
+                    is ApiResource.OnError -> {
+                        if (errorCounts < 2){
+                            errorState.emit(ErrorState.TRY_AGAIN)
+                        }else{
+                            errorState.emit(ErrorState.TRY_LATER)
+                        }
+                        errorCounts++
+                    }
                     is ApiResource.OnLoading -> {}
                 }
             } }
