@@ -12,7 +12,7 @@ class DatabaseImpl @Inject constructor(
     val currencies: Flow<List<String>> get() = db.getAllCurrencies()
     fun getCurrenciesExcept(symbol: String): Flow<List<String>> = db.getCurrenciesExcept(symbol = symbol)
     fun getCurrencyRate(rateKey: String,time: Long): Flow<CurrencyRate?> = db.getCurrencyRate(rateKey = rateKey, time = time)
-
+    suspend fun getCurrencyRateByKey(rateKey: String) = db.getCurrencyRateByKey(rateKey)
     suspend fun insertRate(rateModel: CurrencyConversionModel?){
         if (rateModel == null) return
         val timestamp = TimeoutUtil.convertServerTimeToLocal(rateModel.info.timestamp)

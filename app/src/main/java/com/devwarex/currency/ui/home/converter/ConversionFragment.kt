@@ -16,13 +16,9 @@ import androidx.navigation.fragment.findNavController
 import com.devwarex.currency.R
 import com.devwarex.currency.databinding.FragmentConversionBinding
 import com.devwarex.currency.util.ErrorState
-import com.devwarex.currency.util.TimeoutUtil
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Calendar
-import java.util.Date
-
 
 @AndroidEntryPoint
 class ConversionFragment : Fragment(

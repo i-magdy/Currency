@@ -19,6 +19,9 @@ interface AppDao {
     @Query("select * from rates_table where rateKey = :rateKey and timestamp > :time")
     fun getCurrencyRate(rateKey: String,time: Long): Flow<CurrencyRate?>
 
+    @Query("select * from rates_table where rateKey = :rateKey")
+    suspend fun getCurrencyRateByKey(rateKey: String): CurrencyRate?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSymbols(currency: Currency)
 

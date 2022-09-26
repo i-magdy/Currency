@@ -28,13 +28,16 @@ interface CurrencyService {
 
     @GET(EndPoints.TIME_SERIES_RES)
     suspend fun getHistoricalCurrencyConversionRate(
+        @Header(EndPoints.API_KEY_HEADER) apiKey: String,
         @Query(EndPoints.BASE_CURRENCY_QUERY) base: String,
+        @Query(EndPoints.TO_QUERY) to: String,
         @Query(EndPoints.START_DATE_QUERY) startDate: String,
         @Query(EndPoints.END_DATE_QUERY) endDate: String
     ): Response<TimeSeriesConversionModel>
 
     @GET(EndPoints.LATEST_RATES_RES)
     suspend fun getLatestCurrenciesRates(
+        @Header(EndPoints.API_KEY_HEADER) apiKey: String,
         @Query(EndPoints.BASE_CURRENCY_QUERY) base: String,
         @Query(EndPoints.SYMBOLS_QUERY) symbols: String
     ): Response<LatestRatesModel>
