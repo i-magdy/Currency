@@ -2,6 +2,7 @@ package com.devwarex.currency.ui.home.converter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devwarex.currency.data.DetailsArgs
 import com.devwarex.currency.util.ErrorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -16,8 +17,10 @@ class ConversionViewModel @Inject constructor(
 
 
     private val _uiState = MutableStateFlow(ConversionUiState())
+    private val _navigateState = MutableStateFlow(DetailsArgs("",""))
     val uiState: StateFlow<ConversionUiState> = _uiState
     val currencies get() = repo.currencies
+    val navigateState: StateFlow<DetailsArgs> get() = _navigateState
     val errorState: StateFlow<ErrorState> get() = repo.errorState
 
 
@@ -117,7 +120,14 @@ class ConversionViewModel @Inject constructor(
         return String.format("%.1f",s)
     }
 
-    fun navigateToDetails(){
+    fun navigateToDetails() = viewModelScope.launch {
+        _navigateState.emit(DetailsArgs(
+            rate_key = "${_uiState.value.from}-${_uiState.value.to}",
+            amount = _uiState.value.amount
+        ))
+    }
 
+    fun removeNavigationObservable() = viewModelScope.launch {
+        _navigateState.emit(DetailsArgs("",""))
     }
 }

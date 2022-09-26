@@ -12,6 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.devwarex.currency.R
 import com.devwarex.currency.databinding.FragmentConversionBinding
 import com.devwarex.currency.util.ErrorState
@@ -47,9 +48,25 @@ class ConversionFragment : Fragment(
         updateSymbols()
         binding.amountEt.addTextChangedListener(amountWatcher)
         binding.resultEt.addTextChangedListener(resultWatcher)
-        lifecycleScope.launchWhenStarted { viewModel.errorState.collect{updateUiOnError(it)} }
+        lifecycleScope.launchWhenStarted {
+            launch {viewModel.errorState.collect{updateUiOnError(it)} }
+            launch { viewModel.navigateState.collect{
+                if (it.amount.isNotEmpty() && it.rate_key.isNotEmpty()){
+                    val action = ConversionFragmentDirections.actionNavigateToDetails(
+                        rateKey = it.rate_key,
+                        amount =it.amount
+                    )
+                    findNavController().navigate(action)
+                }
+            } }
+        }
+
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.removeNavigationObservable()
+    }
 
     private fun updateUiOnError(state: ErrorState){
         when(state){

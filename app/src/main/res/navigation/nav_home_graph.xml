@@ -10,10 +10,28 @@
         android:label="@string/conversion_label"
         tools:layout="@layout/fragment_conversion">
         <action android:id="@+id/action_navigate_to_details"
-            app:destination="@id/details_fragment"/>
+            app:destination="@id/details_fragment">
+            <argument
+                android:name="rateKey"
+                app:argType="string"
+                android:defaultValue=""/>
+            <argument
+                android:name="amount"
+                app:argType="string"
+                android:defaultValue="0"/>
+        </action>
     </fragment>
     <fragment android:id="@+id/details_fragment"
         android:name="com.devwarex.currency.ui.home.details.DetailsFragment"
         tools:layout="@layout/fragment_details"
-        android:label="@string/details_label"/>
+        android:label="@string/details_label">
+        <argument
+            android:name="rateKey"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="amount"
+            app:argType="string"
+            android:defaultValue="0"/>
+    </fragment>
 </navigation>
