@@ -1,8 +1,10 @@
 package com.devwarex.currency.ui.launcher
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devwarex.currency.api.ApiResource
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ class LaunchViewModel @Inject constructor(
                 when(val api = it){
                     is ApiResource.OnLoading -> { if (api.isLoading) _uiState.emit(LaunchUiState(isLoading = false, isFetchingData = true)) }
                     is ApiResource.OnSuccess -> {
+                        Log.e("gsn", Gson().toJson(api))
                         _uiState.emit(_uiState.value.copy(isLoading = false, onSuccess = true, isNetworkAvailable = false))
                         delay(800)
                         _uiState.emit(LaunchUiState(isLoading = false, navigate = true))
@@ -48,8 +51,8 @@ class LaunchViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    fun cancelJobs(){
         repo.cancelJobs()
     }
+
 }

@@ -7,6 +7,7 @@ import com.devwarex.currency.db.DatabaseImpl
 import com.devwarex.currency.models.CurrenciesSymbolModel
 import com.devwarex.currency.repos.CurrencySymbolsRepo
 import com.devwarex.currency.util.TimeoutUtil.isSymbolsTimeout
+import com.google.gson.Gson
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -31,8 +32,10 @@ class LaunchRepo @Inject constructor(
                         is ApiResource.OnError ->{ apiState.emit(ApiResource.OnError(error = resource.error, isLoading = resource.isLoading)) }
                         is ApiResource.OnLoading-> { apiState.emit(ApiResource.OnLoading(resource.isLoading)) }
                         is ApiResource.OnSuccess -> {
+                            Log.e("gsn",Gson().toJson(resource.body))
                             db.insertSymbols(resource.body!!.symbols)
                             apiState.emit(ApiResource.OnSuccess(false,resource.body))
+
                         }
                     }
                 }
@@ -48,7 +51,22 @@ class LaunchRepo @Inject constructor(
                 symbolsRepo.getAllCurrencies()
                 datastore.updateSymbolsTimeout(Calendar.getInstance().timeInMillis)
             }else{
-                apiState.emit(ApiResource.OnSuccess(isLoading = false, body = null))
+                launch {
+                    db.currencies.collect {
+                        if (coroutineJob.isActive) {
+                            if (it.isNullOrEmpty()) {
+                                apiState.emit(
+                                    ApiResource.OnError(
+                                        error = "Database is empty",
+                                        isLoading = false
+                                    )
+                                )
+                            } else {
+                                apiState.emit(ApiResource.OnSuccess(isLoading = false, body = null))
+                            }
+                        }
+                    }
+                }
             }
         } }
     }
